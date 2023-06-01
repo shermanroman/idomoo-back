@@ -42,6 +42,9 @@ export const handler = async (event, context) => {
                 body = getStoryboardsResponse.data;
                 break;
             case 'POST /storyboards/generate':
+                
+                let requestJSON = JSON.parse(event.body);
+
                 const generateOptions = {
                     method: 'POST',
                     url: 'https://usa-api.idomoo.com/api/v2/storyboards/generate',
@@ -55,35 +58,36 @@ export const handler = async (event, context) => {
                         "output": {
                             "video": [
                                 {
-                                    "video_type": "mp4",
-                                    "height": 720
+                                    "video_type": requestJSON['videoFormat'],
+                                    "height": requestJSON['resolution'],
+                                    "Quality": requestJSON['quality'],
                                 }
                             ]
                         },
                         "data": [
                             {
                                 "key": "Address",
-                                "val": "Tel-Aviv",
+                                "val": requestJSON['Address'],
                                 "description": "test address"
                             },
                             {
                                 "key": "Email address",
-                                "val": "sherman.roman.a@gmail.com",
+                                "val": requestJSON['Email address'],
                                 "description": "my email address"
                             },
                             {
                                 "key": "First name",
-                                "val": "Roman",
+                                "val": requestJSON['First name'],
                                 "description": "my first name"
                             },
                             {
                                 "key": "Middle name",
-                                "val": "Israel",
+                                "val": requestJSON['Middle name'],
                                 "description": "my middle name"
                             },
                             {
                                 "key": "Last name",
-                                "val": "Sherman",
+                                "val": requestJSON['Last name'],
                                 "description": "my last name"
                             }
                         ]
